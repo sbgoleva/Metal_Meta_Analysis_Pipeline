@@ -1,7 +1,7 @@
 #module load GCCcore/.8.2.0
 #module load Metal
 
-#metal /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/METAL_BioVU_UKBBR56_CC/metal_script.sh > /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss_absolute_filter_ref_maf/metal_fs_gwas_try.log
+#metal /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss/metal_script.sh > /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss/metal_fs_gwas_try.log
 
 
 CUSTOMVARIABLE N
@@ -29,21 +29,21 @@ FREQLABEL EAF
 
 ###add each sumstats file to be processed. The output file from the pre_meta R script should go here
 #in this example, I am processing 6 different summary statistics
-PROCESS /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss_absolute_filter_ref_maf/iPSYCH/iPSYCH_autosome_sumstats_for_meta_analysis_cleaned.txt
+PROCESS /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss/iPSYCH/iPSYCH_autosome_sumstats_for_meta_analysis_cleaned.txt
 
-PROCESS /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss_absolute_filter_ref_maf/MGBB/MGBB_autosome_sumstats_for_meta_analysis_cleaned.txt
+PROCESS /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss/MGBB/MGBB_autosome_sumstats_for_meta_analysis_cleaned.txt
 
-PROCESS /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss_absolute_filter_ref_maf/BioVU/BioVU_autosome_sumstats_for_meta_analysis_cleaned.txt
+PROCESS /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss/BioVU/BioVU_autosome_sumstats_for_meta_analysis_cleaned.txt
 
-PROCESS /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss_absolute_filter_ref_maf/CC/CC_autosome_sumstats_for_meta_analysis_cleaned.txt
+PROCESS /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss/CC/CC_autosome_sumstats_for_meta_analysis_cleaned.txt
 
-PROCESS /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss_absolute_filter_ref_maf/BioMe/BioMe_autosome_sumstats_for_meta_analysis_cleaned.txt
+PROCESS /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss/BioMe/BioMe_autosome_sumstats_for_meta_analysis_cleaned.txt
 
-PROCESS /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss_absolute_filter_ref_maf/MVP/MVP_autosome_sumstats_for_meta_analysis_cleaned.txt
+PROCESS /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss/MVP/MVP_autosome_sumstats_for_meta_analysis_cleaned.txt
 
 
 #change out file, format is "directory/file_name .tbl"
-OUTFILE /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss_absolute_filter_ref_maf/metal_fs_gwas_try .tbl
+OUTFILE /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss/metal_fs_gwas_try .tbl
 ANALYZE HETEROGENEITY
 
 #file will be written out as directory/file_name1.tbl
