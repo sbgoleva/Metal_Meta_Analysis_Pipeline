@@ -115,7 +115,7 @@ To change in run_metal.sh
 
 To run metal script in Unix screen
 
-    metal /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/METAL_BioVU_UKBBR56_CC/metal_script.sh > /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss_absolute_filter_ref_maf/metal_fs_gwas_try.log
+    metal /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss/metal_script.sh > /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss/metal_fs_gwas_try.log
 
 Post meta-analysis QC steps:
 
