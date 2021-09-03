@@ -118,12 +118,21 @@ Post meta-analysis QC steps:
     1. Check log file for duplicate SNP warnings. For each one, manually figure out which alleles to use based on their frequencies
         e.g. from log file: "WARNING: Bad alleles for marker 'rs16856772', expecting 'a/g' found 'a/t'"
  
-Post meta-analysis Analyses:
+Post meta-analysis sumstats filtering and Manhattan/QQ Plots:
 
-    Read summary statistics in to R, and using qqman package, plot Manhattan and QQ Plots of data
-        ###may need to read in individual sumstats to merge CHR and BP info. 
-        ###working on getting new metal package installed on accre which can do this automatically
-    Using running_ldsc.sh, calculate meta-analysis heritability
-    Using running_ldsc.sh, calculate genetic correlation between related phenotypes
-    Use FUMA to load sumstats for follow up analyses: https://fuma.ctglab.nl/snp2gene
-    Using MultiXcan, conduct TWAS (contact Kritika for script)
+    post_meta_plotting.R
+    
+    
+ 
+    Here you will read summary statistics in to R
+    Using the qqman package, this script plots Manhattan and QQ Plots of data
+         ***may need to read in individual sumstats to merge CHR and BP info.***
+         ***working on getting new metal package installed on accre which can do this automatically***
+    This also filters SNPs from only 1 biobank and writes out summary statistics to be used in all future post-meta analysis
+
+Post meta-analysis analyses:
+
+    1. Using running_ldsc.sh, calculate meta-analysis heritability
+    2. Using running_ldsc.sh, calculate genetic correlation between related phenotypes
+    3. Use FUMA to load sumstats for follow up analyses: https://fuma.ctglab.nl/snp2gene
+    4. Using MultiXcan, conduct TWAS (contact Kritika for script)
