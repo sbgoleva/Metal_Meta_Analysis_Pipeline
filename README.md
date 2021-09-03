@@ -123,7 +123,7 @@ Post meta-analysis Analyses:
     Read summary statistics in to R, and using qqman package, plot Manhattan and QQ Plots of data
         ###may need to read in individual sumstats to merge CHR and BP info. 
         ###working on getting new metal package installed on accre which can do this automatically
-    Using LDSC, calculate meta-analysis heritability
-    Using LDSC, calculate genetic correlation between related phenotypes
-    Use FUMA to load sumstats for follow up analyses
+    Using running_ldsc.sh, calculate meta-analysis heritability
+    Using running_ldsc.sh, calculate genetic correlation between related phenotypes
+    Use FUMA to load sumstats for follow up analyses: https://fuma.ctglab.nl/snp2gene
     Using MultiXcan, conduct TWAS (contact Kritika for script)
