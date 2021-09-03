@@ -14,7 +14,7 @@ source activate ldsc
   --N 494008 \
   --N-cas 7897 \
   --N-con 486111 \
-  --sumstats /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss_absolute_filter_ref_maf/metal_fs_gwas_filtered_20210831.tbl \
+  --sumstats /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss/metal_fs_gwas_filtered_20210831.tbl \
   --snp snpid \
   --N-col Weight
   
