@@ -48,7 +48,7 @@
 # is_ss_reanalysis=TRUE #TRUE if you have already analyzed these sumstats before
 
 
-#source("/data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/pre_meta_analysis_qc.R")
+#source("/data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss/pre_meta_analysis_qc.R")
 ####################################################################
 
 
