@@ -4,9 +4,10 @@ First run each set of summary statistics through the pre_meta_analysis_qc.R scri
 
 Adapted from Winkler et. Al meta analysis Easy QC steps by Slavi Goleva and Lea Davis
 
-##To Be Done with each individual summary statistic file##
+##To be run with each individual summary statistic file##
+#comment out variables at top of script to reflect summary statistics or put separately into R and then source() the script#
 
-#typical run time per summary stat: ~1hr
+#typical run time per summary stat: ~15min
 
 Pre-meta-analysis QC (steps 1-16) is done in:
 
@@ -14,10 +15,10 @@ Pre-meta-analysis QC (steps 1-16) is done in:
     
 For this script, just change the parameters commented out at the top for each set of summary statistics and run independently. 
 
+    #To Be Done with each individual summary statistic file##
     #file info to fill out#
-
     ss_file="/data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/PNES_GWAS_Saige/20210412_PNES_GWAS_Redo_Matched_EUR_step2_chr.all.txt"
-    sumstat_name="BioVU" ##make sure name is unique for each set of sumstats as the output files are based on this
+    sumstat_name="BioVU"
     sep_type=" "
     output_dir="/data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss/"
 
@@ -36,11 +37,9 @@ For this script, just change the parameters commented out at the top for each se
     add_imp_data_for_biovu=TRUE #will be added as 'Rsq' column to sumstats
     is_rsq=TRUE #TRUE if Rsq, FALSE if INFO score
     imp_column="Rsq"
-    is_x_present=TRUE
-    x_col="22"
-    #only need chr_col and bp_col if add_imp_data_for_biovu==TRUE
     chr_col="CHR"
     bp_col="POS"
+    rs_id_col="SNPID"
 
 
     lower_EAF_bound=0.05 #desired EAF filters
@@ -50,68 +49,77 @@ For this script, just change the parameters commented out at the top for each se
     ref_eaf_file="/data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Allele_Freqs/1000GP_p3v5_legends_rbind.noDup.noMono.noCnv.noCnAll.afref.EUR.txt.gz"
     ref_eaf_col="eaf"
     ref_chrbp_col="cptid"
+    ref_ea_col="ea"
+    ref_oa_col="oa"
+    ref_x_name="X"
 
     is_first_sumstat_analysed=TRUE
-    ####################################################################
+
+    is_x_present=FALSE
+    x_col="" ##will be written out as '23' to standardize across biobanks
+
+    is_ss_reanalysis=TRUE #TRUE if you have already analyzed these sumstats before
+
 
 running pre_meta_analysis QC script in R:
 
     source("/data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/pre_meta_analysis_qc.R")
     
-Then, make sure all the plots produced for each sumstat look ok.
+To check after each sumstats has run:
 
-If so, proceed to meta-analysis using outputted summary statistics
-
-
-Run meta analysis in screen, this only takes around 15 minutes:
-
-##For each set of summary statistics, put this information in individually. 
-
-#If you have used the pre-QC script, 
-
-#then the only thing that will change are the sample size column presence column
-
-#and the file name
-
-    module load GCCcore/.8.2.0
-    module load Metal
-
-    metal
-
-    GENOMICCONTROL OFF
-
-    AVERAGEFREQ ON
-    MINMAXFREQ ON
-
-    SCHEME SAMPLESIZE
-    
-    SEPARATOR TAB
-    MARKER chr_pos
-    ALLELE EA OA
-    PVALUELABEL P
-    EFFECTLABEL BETA #change to log(OR) if OR instead of BETA
-    WEIGHTLABEL N #if no N column, remove and uncomment out two lines beneath this
-    #WEIGHTLABEL DONTUSECOLUMN
-    #DEFAULTWEIGHT 10000
-    STDERR SE
-    FREQLABEL EAF
-
-    PROCESS paste0(output_dir,sumstat_name,"_autosome_sumstats_for_meta_analysis_cleaned.txt") #repeat this line and just keep changing ss name
+    1. 1/Median SE vs Sqrt(N) plot runs along identity line, and if not this can be explained by differences in GWAS analysis type, etc
+    2. pre_meta_analysis_qc_summary.txt percents lost and # of SNP look ok
+        A. If BioVU file, "# BioVU snps after merging Rsq info" step should be 100%
+        B. If any step loses more than ~15%, make sure there is a good reason/it makes sense
+        C. Most SNPs remain after "# SNPs after merging with Ref EAF file" step
+        D. "Initial # SNPs where SS EA == Ref EA" and "Initial # SNPs where SS EA == Ref OA" should add up to "# SNPs after merging with Ref EAF file" step
+        E. "Initial # SNPs where SS EA == Ref OA" step should match "Switched EA and OA cols" step
+        F. "Final # SNPs where SS EA == Ref EA" should be 100%
+        G. "Exclude AEF outside 10% of ref AF" should not exceed ~15%. If it does, consider using more appropriate reference population file.
+        H. "#autosomal SNPs" and "# xchr SNPs" should add up to "Exclude AEF outside 10% of ref AF"
+    3. Check the following in the directory for each summary statistics file:
+        A. ref_eaf_vs_[biobank_name]_eaf_after_qc.png plot should be along identity line, with no outliers present
+        B. imputation_histogram_[biobank_name].pdf should not contain values below 0.3 if Rsq and 0.8 if INFO. 
+            Most scores should be clusered around 1. 
+            No values should exceed 1. 
+        C. [biobank_name]_provided_p_values_vs_manually_calc_p_val.png should be on identity line. There should be no outliers. 
+    4.  Calculate lambda GC for each study file – can do this in LDSC (make sure it doesn’t exceed 1.1)
 
 
-After meta-analysis QC steps:
 
-    17.	Calculate lambda GC for each study file – can do this in LDSC (make sure it doesn’t exceed 1.1)
-    18.	Inverse variance weighted meta analysis using a fixed effects model with METAL, as follows
-    19.	If you have duplicate SNPs, flag and figure out which alleles to use based on their frequencies. Print to another file and go through them together
-    20.	Print min and max difference in allele freqs
-    21.	If all summary statistics don’t use the same covariates, then this will in effect act as different transformations to the effect estimates, so use the sample size scheme in Metal to meta-analyze
-    22.	Do not include x-chrom for heritability analysis
-    
+If everything looks good, proceed to meta-analysis using outputted summary statistics
+
+Edit and run metal.sh script screen, this takes around 15 minutes:
+
+
+If you have used the pre-QC script, then the only thing that will change are the output file names and the summary statistic file names. 
+Columns are all standardized as part of the pre-QC script output
+To change in run_metal.sh
+   
+   1. script name:
+        /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/METAL_BioVU_UKBBR56_CC/metal_script.sh
+   2. log file output:
+        /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss_absolute_filter_ref_maf/metal_fs_gwas_try.log
+   3. sum-stat names. Each starts with "PROCESS." The number of lines should equal the number of sum-stats to be meta-analyzed
+   4. outfile name ("outfile/prefix .tbl") ***make sure a space separates these two***
+        /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss_absolute_filter_ref_maf/metal_fs_gwas_try .tbl
+   5. If all summary statistics don’t use the same covariates, then this will in effect act as different transformations to the effect estimates, 
+       so use the sample size scheme in Metal to meta-analyze.
+       Else, you can use StErr scheme
+   6. ***Do not include x-chrom for heritability analysis or in meta-analysis***
+        The x-chr must be meta-analyzed separately and can be concatonated with the rest of the results for follow-up analysis.
+
+Post meta-analysis QC steps:
+
+    1. Check log file for duplicate SNP warnings. For each one, manually figure out which alleles to use based on their frequencies
+        e.g. from log file: "WARNING: Bad alleles for marker 'rs16856772', expecting 'a/g' found 'a/t'"
  
-Post-meta-analysis Analyses:
+Post meta-analysis Analyses:
 
     Read summary statistics in to R, and using qqman package, plot Manhattan and QQ Plots of data
-    Using LDSC, calculate heritability
+        ###may need to read in individual sumstats to merge CHR and BP info. 
+        ###working on getting new metal package installed on accre which can do this automatically
+    Using LDSC, calculate meta-analysis heritability
     Using LDSC, calculate genetic correlation between related phenotypes
-    Using MultiXcan, conduct TWAS
+    Use FUMA to load sumstats for follow up analyses
+    Using MultiXcan, conduct TWAS (contact Kritika for script)
