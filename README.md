@@ -96,18 +96,22 @@ If you have used the pre-QC script, then the only thing that will change are the
 Columns are all standardized as part of the pre-QC script output
 To change in run_metal.sh
    
-   1. script name:
+    1. script name:
         /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/METAL_BioVU_UKBBR56_CC/metal_script.sh
-   2. log file output:
+    2. log file output:
         /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss_absolute_filter_ref_maf/metal_fs_gwas_try.log
-   3. sum-stat names. Each starts with "PROCESS." The number of lines should equal the number of sum-stats to be meta-analyzed
-   4. outfile name ("outfile/prefix .tbl") ***make sure a space separates these two***
+    3. sum-stat names. Each starts with "PROCESS." The number of lines should equal the number of sum-stats to be meta-analyzed
+    4. outfile name ("outfile/prefix .tbl") ***make sure a space separates these two***
         /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss_absolute_filter_ref_maf/metal_fs_gwas_try .tbl
-   5. If all summary statistics don’t use the same covariates, then this will in effect act as different transformations to the effect estimates, 
+    5. If all summary statistics don’t use the same covariates, then this will in effect act as different transformations to the effect estimates, 
        so use the sample size scheme in Metal to meta-analyze.
        Else, you can use StErr scheme
-   6. ***Do not include x-chrom for heritability analysis or in meta-analysis***
+    6. ***Do not include x-chrom for heritability analysis or in meta-analysis***
         The x-chr must be meta-analyzed separately and can be concatonated with the rest of the results for follow-up analysis.
+
+To run metal script in Unix screen
+
+    metal /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/METAL_BioVU_UKBBR56_CC/metal_script.sh > /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss_absolute_filter_ref_maf/metal_fs_gwas_try.log
 
 Post meta-analysis QC steps:
 
