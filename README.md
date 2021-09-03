@@ -1,4 +1,8 @@
-# Metal_Meta_Analysis_Pipeline
+Metal_Meta_Analysis_Pipeline
+
+Example can be found in the folder:
+
+    /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss/
 
 First run each set of summary statistics through the pre_meta_analysis_qc.R script in R:
 
