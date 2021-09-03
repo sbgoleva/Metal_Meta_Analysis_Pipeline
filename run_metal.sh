@@ -1,7 +1,7 @@
 #module load GCCcore/.8.2.0
 #module load Metal
 
-#metal /data/davis_lab/golevasb/Proects/GWAS/metal_script.sh > /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss_absolute_filter_ref_maf/metal_fs_gwas_try.log
+#metal /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/METAL_BioVU_UKBBR56_CC/metal_script.sh > /data/davis_lab/golevasb/Projects/PNES_PRS/GWAS/Meta_Analysis_cleaned_ss_absolute_filter_ref_maf/metal_fs_gwas_try.log
 
 
 CUSTOMVARIABLE N
