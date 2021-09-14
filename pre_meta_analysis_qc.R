@@ -39,6 +39,7 @@
 # ref_ea_col="ea"
 # ref_oa_col="oa"
 # ref_x_name="X"
+# ref_maf_range = 0.075 #how much can the reference MAF differ from the SS MAF? This is an absolute value
 # 
 # is_first_sumstat_analysed=TRUE
 # 
